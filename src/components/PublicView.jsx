@@ -69,7 +69,7 @@ export default function PublicView({data, onSelectTeam, onSelectMatch}){
   return (
     <div className='p-4 md:p-6  min-h-screen'>
       <header className='text-center mb-8'>
-        <h1 className='text-4xl font-bold text-800'>LigaProApp</h1>
+        <h1 className='text-4xl font-bold text-800'>Campeonato Interbarrios Huanchaco 2026</h1>
         <p className='text-lg text-600'>Resultados y estadísticas del torneo</p>
       </header>
 

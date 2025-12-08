@@ -6,56 +6,56 @@ export const DATA = {
   "teams": [
     {
       "id": "t1",
-      "nombre": "Tigres FC",
+      "nombre": "LOS TIGRES",
       "logo": "assets/logos/tigres.svg",
       "color": "#FFC107",
       "grupoId": "g1"
     },
     {
       "id": "t2",
-      "nombre": "Águilas United",
+      "nombre": "DEPORTIVO LIMA",
       "logo": "assets/logos/aguilas.svg",
       "color": "#03A9F4",
       "grupoId": "g1"
     },
     {
       "id": "t7",
-      "nombre": "Coyotes FC",
+      "nombre": "CONQUISTADORES FC",
       "logo": "assets/logos/coyotes.svg",
       "color": "#FF5722",
       "grupoId": "g1"
     },
     {
       "id": "t8",
-      "nombre": "Jaguares FC",
+      "nombre": "SPORT LOS AMIGOS",
       "logo": "assets/logos/jaguares.svg",
       "color": "#607D8B",
       "grupoId": "g1"
     },
     {
       "id": "t3",
-      "nombre": "Leones FC",
+      "nombre": "CHOCOLATEROS STYLE",
       "logo": "assets/logos/leones.svg",
       "color": "#4CAF50",
       "grupoId": "g2"
     },
     {
       "id": "t4",
-      "nombre": "Lobos FC",
+      "nombre": "LOBOS FC",
       "logo": "assets/logos/lobos.svg",
       "color": "#F44336",
       "grupoId": "g2"
     },
     {
       "id": "t5",
-      "nombre": "Halcones FC",
+      "nombre": "HALCONES FC",
       "logo": "assets/logos/halcones.svg",
       "color": "#9C27B0",
       "grupoId": "g2"
     },
     {
       "id": "t6",
-      "nombre": "Tiburones FC",
+      "nombre": "VIRGEN DEL CHAPI FC",
       "logo": "assets/logos/tiburones.svg",
       "color": "#2196F3",
       "grupoId": "g2"
