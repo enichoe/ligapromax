@@ -19,15 +19,16 @@ export default function TeamDetail({ team, players, onBack }) {
                 <th className="p-2">Nombre</th>
                 <th>Edad</th>
                 <th>Posición</th>
-                <th>Goles</th>
-                <th>Amarillas</th>
-                <th>Rojas</th>
+                <th>Puntos</th>
+                <th>Rebotes</th>
+                <th>Asistencias</th>
+                <th>Faltas</th>
                 <th>Estado</th>
               </tr>
             </thead>
             <tbody>
               {players.map(p => {
-                const isSuspended = p.amarillas > 3 || p.rojas > 0;
+                const isSuspended = p.faltas >= 5;
                 return (
                   <tr key={p.id} className="border-b">
                     <td className="p-2 flex items-center gap-4">
@@ -36,9 +37,10 @@ export default function TeamDetail({ team, players, onBack }) {
                     </td>
                     <td>{p.edad}</td>
                     <td>{p.posicion}</td>
-                    <td>{p.goles}</td>
-                    <td>{p.amarillas}</td>
-                    <td>{p.rojas}</td>
+                    <td>{p.puntos}</td>
+                    <td>{p.rebotes}</td>
+                    <td>{p.asistencias}</td>
+                    <td>{p.faltas}</td>
                     <td>
                       {p.lesionado && <span className="text-red-500 font-bold">Lesionado</span>}
                       {isSuspended && <span className="text-orange-500 font-bold">Suspendido</span>}

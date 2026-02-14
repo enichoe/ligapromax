@@ -1,15 +1,16 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import PublicView from './components/PublicView'
 import AdminLogin from './components/AdminLogin'
 import AdminPanel from './components/AdminPanel'
 import { DATA } from './data/mock'
+import { SPONSORS } from './data/sponsors'
 import TeamDetail from './components/TeamDetail'
 import MatchDetail from './components/MatchDetail'
 import Footer from './components/Footer'
 
-export default function App(){
+export default function App() {
   const [view, setView] = useState('public') // 'public', 'login', 'admin'
-  const [data, setData] = useState(DATA)
+  const [data, setData] = useState({ ...DATA, sponsors: SPONSORS })
   const [selectedTeam, setSelectedTeam] = useState(null)
   const [selectedMatch, setSelectedMatch] = useState(null)
 
@@ -21,54 +22,83 @@ export default function App(){
     setSelectedMatch(matchId)
   }
 
-  const login = (user, pass)=>{
-    if(user==='admin' && pass==='1234'){ setView('admin'); return true }
+  const login = (user, pass) => {
+    if (user === 'admin' && pass === '1234') { setView('admin'); return true }
     return false
   }
 
-  const logout = ()=> setView('public')
+  const logout = () => setView('public')
 
-  const updateData = (next)=> {
+  const updateData = (next) => {
     console.log('data updated', next)
     setData(next)
   }
 
-  const renderNav = ()=>{
+  const renderNav = () => {
     return (
-      <nav className='bg-slate-900 text-white p-4 flex justify-between items-center shadow-md'>
-        <h1 className='text-xl font-bold cursor-pointer hover:text-cyan-400 transition-colors' onClick={()=>{setView('public'); setSelectedTeam(null); setSelectedMatch(null)}}>LigaProApp</h1>
-        {view !== 'admin' && <button onClick={()=>setView('login')} className='btn-secondary'>Admin Login</button>}
+      <nav className='bg-gray-800 text-gray-100 p-4 flex justify-between items-center shadow-md'>
+        <h1 className='text-xl font-bold cursor-pointer hover:text-indigo-400 transition-colors' onClick={() => { setView('public'); setSelectedTeam(null); setSelectedMatch(null) }}>🏀 BasketLeagueApp</h1>
+        {view !== 'admin' && <button onClick={() => setView('login')} className='btn-secondary'>Admin Login</button>}
       </nav>
     )
   }
 
-  const renderView = ()=>{
+  const renderView = () => {
     const team = data.teams.find(t => t.id === selectedTeam)
-    if(team){
+    if (team) {
       const players = data.players.filter(p => p.equipoId === team.id)
-      return <TeamDetail team={team} players={players} onBack={()=>{setSelectedTeam(null); setSelectedMatch(null)}} />
+      return <TeamDetail team={team} players={players} onBack={() => { setSelectedTeam(null); setSelectedMatch(null) }} />
     }
 
     const match = data.matches.find(m => m.id === selectedMatch)
-    if(match){
+    if (match) {
       const teamA = data.teams.find(t => t.id === match.equipoA)
       const teamB = data.teams.find(t => t.id === match.equipoB)
       const playersA = data.players.filter(p => p.equipoId === teamA.id)
       const playersB = data.players.filter(p => p.equipoId === teamB.id)
-      return <MatchDetail match={match} teamA={teamA} teamB={teamB} playersA={playersA} playersB={playersB} onBack={()=>{setSelectedTeam(null); setSelectedMatch(null)}} />
+      return <MatchDetail match={match} teamA={teamA} teamB={teamB} playersA={playersA} playersB={playersB} onBack={() => { setSelectedTeam(null); setSelectedMatch(null) }} />
     }
 
-    if(view === 'public') return <PublicView data={data} onSelectTeam={handleSelectTeam} onSelectMatch={handleSelectMatch} />
-    if(view === 'login') return <AdminLogin onLogin={login} />
-    if(view === 'admin') return <AdminPanel data={data} updateData={updateData} onLogout={logout} />
+    if (view === 'public') return <PublicView data={data} onSelectTeam={handleSelectTeam} onSelectMatch={handleSelectMatch} />
+    if (view === 'login') return <AdminLogin onLogin={login} />
+    if (view === 'admin') return <AdminPanel data={data} updateData={updateData} onLogout={logout} />
   }
 
   return (
-    <div className='dark bg-gray-900 min-h-screen'>
+    <div className='dark bg-gray-900 min-h-screen flex flex-col'>
       {renderNav()}
-      <main>
+      <main className='flex-1'>
         {renderView()}
       </main>
+      {view === 'public' && data.sponsors && data.sponsors.length > 0 && (
+        <section className='p-6 md:p-10 bg-gray-900'>
+          <div className='max-w-4xl mx-auto'>
+            <h2 className='text-3xl font-bold mb-8 text-indigo-400 text-center'>Nuestros Auspiciadores 🤝</h2>
+            <div className='flex flex-wrap justify-center gap-8'>
+              {data.sponsors.map(sponsor => (
+                <a
+                  key={sponsor.id}
+                  href={sponsor.link}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='group flex flex-col items-center p-6 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all duration-300 shadow-xl border border-gray-700 hover:border-indigo-500 w-full sm:w-64 transform hover:-translate-y-2'
+                >
+                  <div className='h-24 flex items-center justify-center mb-4 w-full'>
+                    <img
+                      src={sponsor.logo}
+                      alt={sponsor.nombre}
+                      className='max-h-full max-w-full object-contain transition-all duration-300'
+                    />
+                  </div>
+                  <span className='text-gray-100 font-semibold text-center text-sm md:text-base leading-tight group-hover:text-indigo-400 transition-colors duration-300'>
+                    {sponsor.nombre}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
       <Footer />
     </div>
   )
